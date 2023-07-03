@@ -5,6 +5,7 @@ import { BASE_URL, mapPlanetDataToTableData, sortObjArrayByKey, shouldWrapWithLi
 
 function App() {
   const [page, setPage] = React.useState(1)
+  const [hasNextPage, setHasNextPage] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
   const [errorMessage, setErrorMessage] = React.useState('')
   const [tableData, setTableData] = React.useState([] as ExpectedTableData[])
@@ -29,12 +30,15 @@ function App() {
         return setIsLoading(false)
       }
 
+      // set next page limit
+      if (data.next) setHasNextPage(true)
+      else setHasNextPage(false)
+
       let mappedData = data.results.map((planet) => {
         return mapPlanetDataToTableData(planet)
       })
       mappedData = sortObjArrayByKey(mappedData, 'name', 'desc')
       setTableData(mappedData)
-      console.log(mappedData)
       setIsLoading(false)
     } catch (error) {
       if (error instanceof Error) {
@@ -83,8 +87,12 @@ function App() {
               </tbody>
             </table></>
         }
-
         { errorMessage ? <div>{errorMessage}</div>  : null}
+        <div className='pagination'>
+          <button disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
+          <span>Page {page}</span>
+          <button disabled={hasNextPage === false} onClick={() => setPage(page + 1)}>Next</button>
+        </div>
       </main>
     </div>
   );
