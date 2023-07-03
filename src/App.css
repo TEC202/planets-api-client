@@ -11,3 +11,44 @@
   color: white;
 }
 
+
+table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+thead {
+  display: table-header-group;
+  vertical-align: middle;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+}
+
+th {
+  display: table-cell;
+  font-weight: bold;
+  border: 1px solid gray;
+}
+
+table thead th {
+  vertical-align: bottom;
+}
+
+table thead th {
+  vertical-align: bottom;
+}
+table td, .table th {
+  padding: 0.75rem;
+  vertical-align: top;
+}
+
+td {
+  display: table-cell;
+  vertical-align: inherit;
+  border: 1px solid gray;
+}
