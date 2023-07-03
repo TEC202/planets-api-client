@@ -62,9 +62,9 @@ function calculateSphericalSurfaceAreaCovered(percentCovered: number | string, d
 function sortObjArrayByKey(objArray: any[], key: string, direction: Direction) {
     return objArray.sort((a, b) => {
       if (direction === 'asc') {
-        return a[key] > b[key] ? 1 : -1
+        return a[key] > b[key] ? -1 : 1
       } else {
-        return a[key] < b[key] ? 1 : -1
+        return a[key] > b[key] ? 1 : -1
       }
     })
 }
