@@ -5,8 +5,13 @@ This is just a basic React/Typescript application using the following template c
 This project has already been built to static files, so you should be able to serve the files in the `build` directory  using your tool of choice (e.g. [https://github.com/vercel/serve](https://github.com/vercel/serve))
 
 Example using the above:
-- `cd planets-api-client` (change your working directory to the project's root directory)
-- `serve -s build`
+- Click the 'code' button on github
+- Either download as a zip or clone the repo
+- (extract the project files if you downloaded as a zip)
+- Change your working directory to the project's root directory
+-     `cd planets-api-client` 
+- Serve the static assets
+-     `serve -s build`
 NOTE: `-s` flag rewrites all not-found requests to `index.html`
 
 
