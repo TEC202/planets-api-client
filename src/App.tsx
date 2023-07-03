@@ -4,11 +4,11 @@ import './App.css';
 import { BASE_URL, mapPlanetDataToTableData, sortObjArrayByKey, shouldWrapWithLink } from './util';
 
 function App() {
-  const [page, setPage] = React.useState(1)
-  const [hasNextPage, setHasNextPage] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [errorMessage, setErrorMessage] = React.useState('')
-  const [tableData, setTableData] = React.useState([] as ExpectedTableData[])
+  const [page, setPage] = React.useState(1);
+  const [hasNextPage, setHasNextPage] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const [tableData, setTableData] = React.useState([] as ExpectedTableData[]);
   const [columns, setColumns] = React.useState([
     { label: 'Name', key: 'name' },
     { label: 'Climate', key: 'climate' },
@@ -16,42 +16,42 @@ function App() {
     { label: 'Terrain', key: 'terrain' },
     { label: 'Population', key: 'population' },
     { label: 'Surface Area covered by water (km\u00B2)', key: 'surfaceWater' },
-  ] as Column[])
+  ] as Column[]);
 
   async function getTableData(pageNumber: number) {
-    setIsLoading(true)
-    setErrorMessage('')
+    setIsLoading(true);
+    setErrorMessage('');
     try {
-      const response = await fetch(`${BASE_URL}planets/?page=${pageNumber}`)
-      if (!response.ok) throw new Error('Error getting data')
-      const data = await response.json() as ExpectedAPIResponse
+      const response = await fetch(`${BASE_URL}planets/?page=${pageNumber}`);
+      if (!response.ok) throw new Error('Error getting data');
+      const data = await response.json() as ExpectedAPIResponse;
       if (!data.results || !data.results.length) {
-        setErrorMessage('No data found')
-        return setIsLoading(false)
+        setErrorMessage('No data found');
+        return setIsLoading(false);
       }
 
       // set next page limit
-      if (data.next) setHasNextPage(true)
-      else setHasNextPage(false)
+      if (data.next) setHasNextPage(true);
+      else setHasNextPage(false);
 
       let mappedData = data.results.map((planet) => {
-        return mapPlanetDataToTableData(planet)
+        return mapPlanetDataToTableData(planet);
       })
-      mappedData = sortObjArrayByKey(mappedData, 'name', 'desc')
-      setTableData(mappedData)
-      setIsLoading(false)
+      mappedData = sortObjArrayByKey(mappedData, 'name', 'desc');
+      setTableData(mappedData);
+      setIsLoading(false);
     } catch (error) {
       if (error instanceof Error) {
-        setErrorMessage(error.message)
+        setErrorMessage(error.message);
       } else {
-        setErrorMessage('Error getting data')
+        setErrorMessage('Error getting data');
       }
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
   React.useEffect(() => {
-    getTableData(page)
+    getTableData(page);
   }, [page])
 
 

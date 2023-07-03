@@ -3,7 +3,7 @@ export type ExpectedAPIResponse = {
     next: string,
     previous: string,
     results: APIPlanetData[]
-}
+};
 
 export type APIPlanetData = {
     name: string,
@@ -20,7 +20,7 @@ export type APIPlanetData = {
     created: string,
     edited: string,
     url: string
-}
+};
 
 
 /*
@@ -35,11 +35,11 @@ export type ExpectedTableData = {
     terrain: string,
     population: string,
     surfaceWater: string
-}
+};
 
 export type Column = {
     label: string,
     key: keyof ExpectedTableData,
-}
+};
 
 export type Direction = 'asc' | 'desc';

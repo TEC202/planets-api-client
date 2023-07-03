@@ -9,10 +9,10 @@ function mapPlanetDataToTableData(planetData: APIPlanetData): ExpectedTableData 
     //  - Convert all values representing numbers to a formatted string with spaces for thousands
     //  - Calculate the surface water area based on the percentage of the planet covered in water and the diameter of the planet
 
-    let numberOfResidents = typeof planetData.residents === 'string' ? convertUnknownValues(planetData.residents) : planetData.residents.length.toString()
+    let numberOfResidents = typeof planetData.residents === 'string' ? convertUnknownValues(planetData.residents) : planetData.residents.length.toString();
     let surfaceWater = (convertUnknownValues(planetData.surface_water) === UNKNOWN_VALUE_SUBSTITUTE ||  convertUnknownValues(planetData.diameter) === UNKNOWN_VALUE_SUBSTITUTE)
         ? UNKNOWN_VALUE_SUBSTITUTE 
-        : calculateSphericalSurfaceAreaCovered(planetData.surface_water, planetData.diameter)
+        : calculateSphericalSurfaceAreaCovered(planetData.surface_water, planetData.diameter);
     let tableData: ExpectedTableData = {
         name: convertUnknownValues(planetData.name),
         url: planetData.url,
@@ -21,8 +21,8 @@ function mapPlanetDataToTableData(planetData: APIPlanetData): ExpectedTableData 
         terrain: convertUnknownValues(planetData.terrain),
         population: convertToFormattedNumber(planetData.population),
         surfaceWater: convertToFormattedNumber(surfaceWater)
-    }
-    return tableData
+    };
+    return tableData;
 }
 
 /*
@@ -30,18 +30,18 @@ function mapPlanetDataToTableData(planetData: APIPlanetData): ExpectedTableData 
     * Assumption: only strict string values of 'unknown' (case-sensitive) should be converted not ' unknown ' or 'UNKNOWN'
 */
 function convertUnknownValues(incomingValue: any): any {
-    if (incomingValue === 'unknown') return UNKNOWN_VALUE_SUBSTITUTE
-    else return incomingValue
+    if (incomingValue === 'unknown') return UNKNOWN_VALUE_SUBSTITUTE;
+    else return incomingValue;
 }
 
 function convertToFormattedNumber(incomingValue: string | number): string {
-    let formattedNumber = convertUnknownValues(incomingValue)
-    if (formattedNumber === UNKNOWN_VALUE_SUBSTITUTE) return formattedNumber
+    let formattedNumber = convertUnknownValues(incomingValue);
+    if (formattedNumber === UNKNOWN_VALUE_SUBSTITUTE) return formattedNumber;
 
-    formattedNumber = Number(formattedNumber)
+    formattedNumber = Number(formattedNumber);
     // toLocaleString() will add commas for thousands so then we will replace commas with spaces for the desired format
-    formattedNumber = formattedNumber.toLocaleString('en-US').split(',').join(' ')
-    return formattedNumber
+    formattedNumber = formattedNumber.toLocaleString('en-US').split(',').join(' ');
+    return formattedNumber;
 
 }
 
@@ -62,17 +62,17 @@ function calculateSphericalSurfaceAreaCovered(percentCovered: number | string, d
 function sortObjArrayByKey(objArray: any[], key: string, direction: Direction) {
     return objArray.sort((a, b) => {
       if (direction === 'asc') {
-        return a[key] > b[key] ? -1 : 1
+        return a[key] > b[key] ? -1 : 1;
       } else {
-        return a[key] > b[key] ? 1 : -1
+        return a[key] > b[key] ? 1 : -1;
       }
     })
 }
 
 function shouldWrapWithLink(columnKey: string, row: any): boolean {
-    if (columnKey !== 'name') return false
-    if (!row || !row['url']) return false
-    return row['url'].startsWith(BASE_URL)
+    if (columnKey !== 'name') return false;
+    if (!row || !row['url']) return false;
+    return row['url'].startsWith(BASE_URL);
   }
 
 export {
@@ -80,4 +80,7 @@ export {
     mapPlanetDataToTableData,
     sortObjArrayByKey,
     shouldWrapWithLink,
+    convertUnknownValues,
+    convertToFormattedNumber,
+    calculateSphericalSurfaceAreaCovered,
 }
